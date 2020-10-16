@@ -1,0 +1,7 @@
+Chapter3
+3.1:
+a.
+select title 
+from course as c
+join department as d
+on c.dept_name = d.dept_name and c.credits = 3
