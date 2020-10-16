@@ -1,0 +1,61 @@
+chapter 2
+2.1:
+person_name, person_name, company_name
+
+2.2:
+insert values(10000,'bertie','French','22222')
+can simply break the restriction
+
+2.3:
+end_time is derived from start_time
+
+2.4:
+not really, it is still possible that two teacher have the same name
+
+2.5:
+select  the combinations of a specific student and all teachers 
+
+2.6:
+a.select all the courses record later than 2009 of all students' information
+b.the same as a
+c.natrual join table student and takes, select distinct ID, name, and course_id 
+
+2.7:
+a. 
+select person_name
+from employee as e
+join works as w
+on e.person_name = w.person_name and e.city = 'Miani'
+
+b.
+select person_name
+from employee as e
+join works as w
+on e.person_name = w.person_name and w.salary >= 100000
+
+
+c.
+select person_name
+from employee as e
+join works as w
+on e.person_name = w.person_name and e.city = 'Miani'  and w.salary >= 100000
+
+2.8
+a.
+select branch_name
+from branch 
+where branch_city = 'Chicago'
+
+b.
+select custom_name
+from borrower as b
+join loan as l
+on b.loan_number = b.loan_number and l.branch_name = 'Downtown'
+
+
+
+
+
+
+
+
