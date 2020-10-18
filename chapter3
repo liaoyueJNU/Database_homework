@@ -62,8 +62,75 @@ select ID, name, dept_name, 10000
 from student 
 where tot_cred >= 100
 
+3.4
+a.
+select count(distinct *)
+from participated as p
+join car as c
+on p.license = c.license and c.year = 2009
 
+b.
+insert accident values(10000, 2020/10/18, 'Peking')
 
+c.
+delete from
+car
+where model = 'Mazda' and licese in
+(select licese from person as p, owns as o
+where p.name = 'John Smith' and p.dirver_id = o. driver_id)
+
+3.5
+a.
+select ID,
+   case
+      when score < 40 then 'f'
+      when score < 60 then 'c'
+      when score < 80 then 'b'
+      else 'a'
+   end
+from marks
+
+b.
+with grades as
+(
+    select ID,
+      case
+         when score < 40 then ’F’
+         when score < 60 then ’C’
+         when score < 80 then ’B’
+         else ’A’
+      end as grade
+from marks
+)
+select grade, count(ID)
+from grades
+group by grade
+
+3.6
+select dept_name
+from department
+where lower(dept_name) like '%sci%'
+
+3.7
+ans:
+when there is no  element that simultanenously exists p.a1 and r1.a1 and r2.a1.
+
+3.8
+a.
+select *
+from customer as c 
+where c.customer_name not in 
+(select customer_name from borrower)
+
+b.
+select  c.customer_name
+from customer as c left join  customer.c1 using (customer_street, customer_city)
+where c1.customer_name = 'Smith'
+
+c.
+select distinct branch_name
+from branch as b natural join customer as c natural join depositor as d
+where c.customer_city = 'Harrison'
 
 
 
