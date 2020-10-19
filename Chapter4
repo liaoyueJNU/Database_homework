@@ -1,0 +1,13 @@
+4.1
+a. hint: using count(course_id) instend of count(*) since count * counts null values as well.
+select ID, name,
+count(course_id) as 'Number of sections'
+from instructor natural left  join teaches
+group by ID
+
+b. just count(*) since the instructor appear in teaches definitely have tought at least one course
+select ID, name,
+(select count(*)  from teaches as t where t.ID = i.ID) as number
+from instructor as i
+
+
