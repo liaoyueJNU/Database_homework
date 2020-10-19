@@ -132,6 +132,69 @@ select distinct branch_name
 from branch as b natural join customer as c natural join depositor as d
 where c.customer_city = 'Harrison'
 
+3.9
+a.
+select e.employee_name, city
+from employee as e, work as w
+on e.employee_name = w.employee_name
+where w.company_name = 'First Bank Corporation'
+
+b.
+select e.employee_name, city, street
+from employee as e, work as w
+on e.employee_name = w.employee_name
+where w.company_name = 'First Bank Corporation' and salary > 10000
+
+c.
+select employee_name
+from works
+where company_name != 'First Bank Corporation'
+
+d.
+select employee_name
+from works
+where salary > all( select salary from works where company_name = 'Small Bank Corporation')
+
+e. copy from reference, this one is the most comprehensiable
+select T.company name
+from company T
+where 
+(select R.city from company R where R.company name = T.company name)
+contains
+(select S.city from company S where S.company name = ’Small Bank Corporation’)
+
+f.despite the extra c column, it is a simpler statement
+select  dept_name, (count(dept_name)) as c
+from instructor
+group by dept_name
+order by c desc
+limit 1 
+
+g.
+select company_name
+from works
+group by company_name
+having avg(salary) > (select avg(salary) from work where company_name = 'First Bank Corporation')
+
+
+3.10
+a.
+update emlpoyee
+set city = 'Newton'
+where employee_name = 'Jones'
+
+b.
+update works w
+   set w.salary = w.salary*
+      ( case
+            when ( w.salary * 1.1 > 100000) then 1.03
+            else 1.1
+      )
+where w.emlpoyee_name in (select manager_name from managers) 
+and w.company_name = 'First Bank Corporation'
+
+
+
 
 
 
