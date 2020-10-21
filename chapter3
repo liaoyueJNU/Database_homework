@@ -113,7 +113,7 @@ where lower(dept_name) like '%sci%'
 
 3.7
 ans:
-when there is no  element that simultanenously exists p.a1 and r1.a1 and r2.a1.
+查询前，先做笛卡尔积，若一表为空，无法找出数据
 
 3.8
 a.
