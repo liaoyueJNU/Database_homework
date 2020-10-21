@@ -10,4 +10,65 @@ select ID, name,
 (select count(*)  from teaches as t where t.ID = i.ID) as number
 from instructor as i
 
+c.
+intended to leave blank
+
+d.
+select dept_name, count(*) as  total_num
+from instructor as i
+natural left join department
+group by  dept_name
+
+4.2
+a. 
+select * from student natural left outer join takes is literally the same as the statement taht drops outer,
+since the left join is naturally possessed with outer
+
+select * from student natural left join takes can be wriiten as 
+
+select * from student natural join takes
+union
+select ID, name, dept_name, tot_cred, NULL, NULL, NULL, NULL, NULL
+from student S1 where not exists
+(select ID from takes T1 where T1.id = S1.id)
+Since natrual join only join those data exists, hence we can use union to postfix those data was left
+
+b.
+select * from student natural full outer join takes
+can be wirtten as 
+
+(select * from student natural join takes)
+union
+(select ID, name, dept_name, tot_cred, NULL, NULL, NULL, NULL, NULL
+from student S1 where not exists
+(select ID from takes T1 where T1.id = S1.id))
+union
+(select ID, NULL, NULL, NULL, course_id, sec_id, semester, year, grade
+from takes T1
+where not exists
+(select ID from student S1 where T1.id = S1.id))
+
+
+4.3
+intended to leave blank
+
+4.4
+a.
+consider the case that a instructor works in Com.Sci department, then teaches a 
+finance course, then there is an error if we equate those parametres.
+
+b.
+It's conprehensible that there are some instructors do not teach any course, without null tuples, 
+
+c.
+select * from teaches natural join instructor;
+In the above query, we would lose some sections if teaches.ID is allowed to be NULL and such tuples exist.
+
+
+
+
+
+
+
+
 
