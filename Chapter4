@@ -64,7 +64,96 @@ c.
 select * from teaches natural join instructor;
 In the above query, we would lose some sections if teaches.ID is allowed to be NULL and such tuples exist.
 
+4.5
+create view student_grade(ID, GPA) as
+       select ID, 
+              case 
+                   when grade = 'A' then 4.0
+                   when grade = 'A-' then 3.7
+                   when grade = 'B' then 3.5
+                   when grade = 'B-' then 3.2
+                   when grade = 'C' then 3.0
+                   when grade = 'C-' then 2.8
+                   else 2.0
+              end
+       from takes
+      
+4.6
+preview the related knowledge:
+'on delete set null' means if we delete a foreign key data, the tuples related to the very data will be set null
+'on delete cascade' means if we delete a foreign key data, the tuples related to the very data will be deleted!!!
+in short, set null will set the related data null, and cascade means those data will be deleted.
 
+create table student 
+(
+  ID varchar(5) primary key,
+  name varchar(20),
+  dept_name varchar(20),
+  tot_cred numeric(3.0) check(tot_cred >0)
+  foreign key (dept_name) references department(dept_name) on delete set null);
+  
+create table takes
+(
+   ID varchar(5),
+   course_id varchar(8),
+   sec_id carchar(8),
+   semester varchar(6),
+   year numeric(4,0),
+   grade varchar(2),
+   primary key( ID, course_id, sec_id, semester, yaer),
+   foreign key(course_id, sec_id, semester, year) references section(course_id, sec_id, semester, year) on delete cascade,
+   foreign key (ID) references student(ID) on delete cascade);
+
+note: since one teacher could have more than one student, then using s_id as primary key would be a comprehensive
+create table advisor
+(
+  s_ID varchar(5) primary key,
+  i_ID varchar(5),
+  foreign key(i_ID) references instructor(ID) on delete set null,
+  foreign key(s_ID) references student(ID) on delete cascade)
+  
+  
+note: one cascade of a specific atteibute is sufficient 
+create table prereq
+(
+  course_id varchar(8),
+  prereq_id varchar(8),
+  primary key(course_id, prereq_id),
+  foreign key(course_id) references course(course_id) on delete cascade,
+  foreign key(prereq_id) references course(course_id))
+  
+  
+4.7
+intended to leave it blank
+no necesscity to do it
+
+4.8
+a.
+select ID, name, sec_id, semester, year, time_slot_id,
+count(distinct building, room_number)
+from instructor natural join teaches natural join section
+group by ID, name, sec_id, semester, year, time_slot_id
+having count(building, room_number)>1
+
+b.
+create assertion check not exists(
+select ID, name, sec_id, semester, year, time_slot_id,
+count(distinct building, room_number)
+from instructor natural join teaches natural join section
+group by ID, name, sec_id, semester, year, time_slot_id
+having count(building, room_number)>1
+)
+
+4.9
+if one tuplt in manager was deleted, the tuples of all employees of the manager, at all levels, get
+deleted as well!
+for instance, if there is a chain 
+M1->E1, E2, E3, M2, M3
+M2->E5,E6. 
+M3->E9, E10.
+if M1 was deleted, all the tuples appreared above, in employee realtion, will be deleted in sequence.
+
+  
 
 
 
